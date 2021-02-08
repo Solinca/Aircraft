@@ -7,13 +7,20 @@ public class Bullet : MonoBehaviour
     public float velocity;
 
     private float lifetime = 0f;
+    private Rigidbody bulletRigidbody;
 
-    public void Initialize(Transform weapon)
+    private void Awake()
+    {
+        bulletRigidbody = GetComponent<Rigidbody>();
+        gameObject.SetActive(false);
+    }
+
+    public void Initialize(Transform spawn)
     {
         gameObject.SetActive(true);
-        gameObject.transform.position = weapon.position;
-        gameObject.transform.rotation = weapon.rotation;
-        gameObject.GetComponent<Rigidbody>().velocity = weapon.forward * velocity;
+        transform.position = spawn.position;
+        transform.rotation = spawn.rotation;
+        bulletRigidbody.velocity = spawn.forward * UpgradeManager.Instance.GetFinalStat(UpgradeStatType.SPEED, velocity);
         lifetime = 0f;
     }
 
@@ -31,7 +38,7 @@ public class Bullet : MonoBehaviour
     {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            collider.gameObject.GetComponent<Enemy>().TakeDamage((int) UpgradeManager.Instance.GetFinalStat(UpgradeStatType.DAMAGE, damage));
             Destruct();
         }
     }

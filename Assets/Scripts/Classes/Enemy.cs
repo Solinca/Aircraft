@@ -1,21 +1,35 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IAircraft
 {
-    public int maxLife;
-    public float velocity;
-    public int probability;
-    public EnemyType type;
+    public GameObject explosion;
+    public GameObject body;
 
     private int currentLife;
+    private SphereCollider sphereCollider;
+    private Rigidbody enemyRigidbody;
     private GameObject player;
+    private EnemyData data;
 
-    private void Start()
+    private void Awake()
     {
-        currentLife = maxLife;
+        sphereCollider = GetComponent<SphereCollider>();
+        enemyRigidbody = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player");
+        gameObject.SetActive(false);
+    }
+
+    public void Initialize(EnemyData enemyData, Vector3 spawnPosition)
+    {
+        gameObject.SetActive(true);
+        sphereCollider.enabled = true;
+        body.SetActive(true);
+        transform.position = spawnPosition;
         transform.LookAt(player.transform);
-        transform.GetComponent<Rigidbody>().velocity = velocity * transform.forward;
+        enemyRigidbody.velocity = enemyData.velocity * transform.forward;
+        currentLife = enemyData.maxLife;
+        data = enemyData;
     }
 
     public void TakeDamage(int damage)
@@ -24,8 +38,7 @@ public class Enemy : MonoBehaviour
 
         if (currentLife <= 0)
         {
-            // Spawn explosion
-            Destroy(gameObject);
+            Destruct();
         }
     }
 
@@ -33,7 +46,27 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-
+            collision.gameObject.GetComponent<Player>().TakeDamage(data.damage);
+            Destruct();
         }
+    }
+
+    public void Destruct()
+    {
+        PickupManager.Instance.SpawnPickup(data.probabilityOfPickupDrop, transform.position);
+        sphereCollider.enabled = false;
+        body.SetActive(false);
+
+        StartCoroutine(WaitForExplosion());
+    }
+
+    private IEnumerator WaitForExplosion()
+    {
+        explosion.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        gameObject.SetActive(false);
+        explosion.SetActive(false);
     }
 }

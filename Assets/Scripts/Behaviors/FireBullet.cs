@@ -5,14 +5,14 @@ public class FireBullet : MonoBehaviour
 {
     public float fireRate;
     public GameObject bullet;
-    public Transform[] weapons;
+    public Transform[] spawns;
 
-    private List<GameObject> bulletPool = new List<GameObject>();
+    private List<Bullet> bulletPool = new List<Bullet>();
     private float cooldown = 1f;
 
     private void Start()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10 / fireRate; i++)
         {
             CreateNewBullet();
         }
@@ -22,22 +22,22 @@ public class FireBullet : MonoBehaviour
     {
         cooldown += Time.deltaTime;
 
-        if ((Input.GetKey("space") || Input.GetKey("joystick button 0")) && cooldown >= fireRate)
+        if ((Input.GetKey("space") || Input.GetKey("joystick button 0")) && cooldown >= UpgradeManager.Instance.GetFinalStat(UpgradeStatType.COOLDOWN, fireRate))
         {
             cooldown = 0f;
 
-            foreach (Transform weapon in weapons)
+            foreach (Transform spawn in spawns)
             {
-               GetBullet().GetComponent<Bullet>().Initialize(weapon);
+               GetBullet().Initialize(spawn);
             }
         }
     }
 
-    private GameObject GetBullet()
+    private Bullet GetBullet()
     {
         for (int i = 0; i < bulletPool.Count; i++)
         {
-            if (!bulletPool[i].activeInHierarchy)
+            if (!bulletPool[i].gameObject.activeInHierarchy)
             {
                 return bulletPool[i];
             }
@@ -46,11 +46,10 @@ public class FireBullet : MonoBehaviour
         return CreateNewBullet();
     }
 
-    private GameObject CreateNewBullet()
+    private Bullet CreateNewBullet()
     {
-        GameObject tempBullet = Instantiate(bullet);
+        Bullet tempBullet = Instantiate(bullet).GetComponent<Bullet>();
         bulletPool.Add(tempBullet);
-        tempBullet.SetActive(false);
 
         return tempBullet;
     }
