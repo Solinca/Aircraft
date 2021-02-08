@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalInput;
     private float angleY;
+    private readonly float lerpTime = 0.1f;
 
     private void Update()
     {
@@ -18,14 +19,14 @@ public class PlayerMovement : MonoBehaviour
     {
         angleY = transform.eulerAngles.y;
 
-        if (angleY < clampAngle + 10)
+        if (angleY < clampAngle + 50)
         {
             angleY = Mathf.Clamp(angleY, 0, clampAngle);
-        } else if (angleY > 360 - clampAngle - 10)
+        } else if (angleY > 360 - clampAngle - 50)
         {
             angleY = Mathf.Clamp(angleY, 360 - clampAngle, 360);
         }
 
-        transform.rotation = Quaternion.Euler(0, angleY + horizontalInput * aircraftSpeed * Time.deltaTime, - horizontalInput * rollAngle);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, angleY + horizontalInput * aircraftSpeed * Time.deltaTime / lerpTime, - horizontalInput * rollAngle), lerpTime);
     }
 }

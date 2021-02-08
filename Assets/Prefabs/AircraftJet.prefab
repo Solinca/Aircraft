@@ -12093,7 +12093,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.5
   bullet: {fileID: 7868629604490018268, guid: e0f48e16ed35b8c4aba0b7b2334587e7, type: 3}
-  spawns: []
+  bulletSpawns:
+  - {fileID: 775189598}
+  - {fileID: 318282752}
 --- !u!114 &1320340069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12106,7 +12108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072a4fb40e1f2ee4eb7ed2c3ea781724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 0
+  maxLife: 20
 --- !u!1 &1179856523446713068
 GameObject:
   m_ObjectHideFlags: 0

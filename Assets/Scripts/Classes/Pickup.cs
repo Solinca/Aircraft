@@ -2,13 +2,13 @@
 
 public class Pickup : MonoBehaviour
 {
-    private Rigidbody enemyRigidbody;
+    private Rigidbody pickupRigidBody;
     private GameObject player;
     private PickupData data;
 
     private void Awake()
     {
-        enemyRigidbody = GetComponent<Rigidbody>();
+        pickupRigidBody = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player");
         gameObject.SetActive(false);
     }
@@ -18,7 +18,7 @@ public class Pickup : MonoBehaviour
         gameObject.SetActive(true);
         transform.position = spawnPosition;
         transform.LookAt(player.transform);
-        enemyRigidbody.velocity = pickupData.velocity * transform.forward;
+        pickupRigidBody.velocity = pickupData.velocity * transform.forward;
         data = pickupData;
     }
 
@@ -38,15 +38,15 @@ public class Pickup : MonoBehaviour
 
     private void ApplyBonuses()
     {
-        foreach (BonusList bonus in data.bonusList)
+        foreach (Bonus bonus in data.bonusList)
         {
             switch (bonus.type)
             {
                 case UpgradeType.FLAT:
-                    UpgradeManager.Instance.AddFlatTemporaryUpgrades(bonus.statType, bonus.value, data.lifetime);
+                    UpgradeManager.Instance.AddFlatTemporaryUpgrade(bonus.statType, bonus.value, data.lifetime);
                     break;
                 case UpgradeType.PERCENTAGE:
-                    UpgradeManager.Instance.AddPercentageTemporarytUpgrades(bonus.statType, bonus.value, data.lifetime);
+                    UpgradeManager.Instance.AddPercentageTemporarytUpgrade(bonus.statType, bonus.value, data.lifetime);
                     break;
             }
         }

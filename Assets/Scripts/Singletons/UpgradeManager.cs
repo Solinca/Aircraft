@@ -34,24 +34,24 @@ public class UpgradeManager : MonoBehaviour
         return (baseStat + flatPermanentValue + flatTemporaryValue) * (1 - percentagePermanentValue / 100) * (1 - percentageTemporaryValue / 100);
     }
 
-    public void AddFlatPermanentUpgrades(UpgradeStatType type, float value)
+    public void AddFlatPermanentUpgrade(UpgradeStatType type, float value)
     {
         flatPermanentUpgrades[type] = flatPermanentUpgrades.ContainsKey(type) ? flatPermanentUpgrades[type] + value : value;
     }
 
-    public void AddPercentagePermanentUpgrades(UpgradeStatType type, float value)
+    public void AddPercentagePermanentUpgrade(UpgradeStatType type, float value)
     {
         percentagePermanentUpgrades[type] = percentagePermanentUpgrades.ContainsKey(type) ? percentagePermanentUpgrades[type] + value : value;
     }
 
-    public void AddFlatTemporaryUpgrades(UpgradeStatType type, float value, float lifetime)
+    public void AddFlatTemporaryUpgrade(UpgradeStatType type, float value, float lifetime)
     {
         flatTemporaryUpgrades[type] = flatTemporaryUpgrades.ContainsKey(type) ? flatTemporaryUpgrades[type] + value : value;
 
         StartCoroutine(WaitForTemporaryBoost(lifetime, flatTemporaryUpgrades, type, value));
     }
 
-    public void AddPercentageTemporarytUpgrades(UpgradeStatType type, float value, float lifetime)
+    public void AddPercentageTemporarytUpgrade(UpgradeStatType type, float value, float lifetime)
     {
         percentageTemporaryUpgrades[type] = percentageTemporaryUpgrades.ContainsKey(type) ? percentageTemporaryUpgrades[type] + value : value;
 

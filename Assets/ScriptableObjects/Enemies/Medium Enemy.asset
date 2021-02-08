@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82dbed3980b2f6e489f741e6c1f50709, type: 3}
   m_Name: Medium Enemy
   m_EditorClassIdentifier: 
-  probabilityOfSpawn: 35
+  probabilityOfSpawning: 35
   probabilityOfPickupDrop: 10
   maxLife: 50
   velocity: 5

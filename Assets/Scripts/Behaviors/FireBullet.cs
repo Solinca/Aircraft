@@ -5,7 +5,7 @@ public class FireBullet : MonoBehaviour
 {
     public float fireRate;
     public GameObject bullet;
-    public Transform[] spawns;
+    public Transform[] bulletSpawns;
 
     private List<Bullet> bulletPool = new List<Bullet>();
     private float cooldown = 1f;
@@ -26,9 +26,9 @@ public class FireBullet : MonoBehaviour
         {
             cooldown = 0f;
 
-            foreach (Transform spawn in spawns)
+            foreach (Transform bulletSpawn in bulletSpawns)
             {
-               GetBullet().Initialize(spawn);
+               GetBullet().Initialize(bulletSpawn);
             }
         }
     }

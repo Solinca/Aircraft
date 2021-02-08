@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Serializable]
-public class BonusList
+public class Bonus
 {
     public UpgradeType type;
     public UpgradeStatType statType;

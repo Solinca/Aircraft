@@ -6,7 +6,7 @@ public class PickupData : ScriptableObject
     [Range(0.0f, 100.0f)]
     public float probabilityOfSpawning;
 
-    public BonusList[] bonusList;
+    public Bonus[] bonusList;
     public float lifetime;
     public float velocity;
     public Pickup pickup;

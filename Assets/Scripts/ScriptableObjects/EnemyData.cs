@@ -4,7 +4,7 @@
 public class EnemyData : ScriptableObject
 {
     [Range(0.0f, 100.0f)]
-    public int probabilityOfSpawn;
+    public int probabilityOfSpawning;
 
     [Range(0.0f, 100.0f)]
     public int probabilityOfPickupDrop;

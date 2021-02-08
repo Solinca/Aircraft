@@ -23,6 +23,6 @@ MonoBehaviour:
   - type: 1
     statType: 2
     value: -50
-  lifetime: 3
+  lifetime: 10
   velocity: 150
   pickup: {fileID: -6879877059710311802, guid: 4cff0997bc5a86048aca6c4c35ae1903, type: 3}

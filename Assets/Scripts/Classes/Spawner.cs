@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
 
         foreach (EnemyData enemyData in enemiesData)
         {
-            totalOfProbabilities += enemyData.probabilityOfSpawn;
+            totalOfProbabilities += enemyData.probabilityOfSpawning;
         }
 
         probabilities = new EnemyType[(int) totalOfProbabilities];
@@ -48,7 +48,7 @@ public class Spawner : MonoBehaviour
         {
             BuildPoolOfEnnemy(enemyData, totalOfProbabilities);
 
-            for (int i = 0; i < enemyData.probabilityOfSpawn; i++, count++)
+            for (int i = 0; i < enemyData.probabilityOfSpawning; i++, count++)
             {
                 probabilities[count] = enemyData.type;
             }
@@ -60,7 +60,7 @@ public class Spawner : MonoBehaviour
         pools[enemyData.type] = new List<Enemy>();
         typeToEnemyData[enemyData.type] = enemyData;
 
-        for (int i = 0; i < (enemyData.probabilityOfSpawn / totalOfProbabilities) * 20 / spawnFrequency; i++)
+        for (int i = 0; i < (enemyData.probabilityOfSpawning / totalOfProbabilities) * 20 / spawnFrequency; i++)
         {
             CreateNewEnemy(enemyData);
         }
